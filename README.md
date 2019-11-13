@@ -1,4 +1,4 @@
-                                **Python - MQL5 Meta Trader 5 simple-to-use connector via Named Pipes**
+                                Python - MQL5 Meta Trader 5 simple-to-use connector via Named Pipes
 
 **Features:**
 Allows to pass double arrays and candles into python script and strings back to MQL5 program
