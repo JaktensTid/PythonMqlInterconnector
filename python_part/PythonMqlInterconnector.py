@@ -4,12 +4,19 @@ from typing import List
 
 
 class Mql5Candle:
-    def __init__(self, high, low, o, close, volume):
+    def __init__(self, high, low, o, close, volume, time):
         self.high = high
         self.low = low
         self.open = o
         self.close = close
         self.volume = volume
+        self.time = time
+
+    def __eq__(self, other):
+        return self.time == other.time
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 
 class Mql5EventHandler:
@@ -56,8 +63,8 @@ class Mql5Connector:
                     result = self._event_handler.on_float_array([float(c) for c in buffer])
                 if flag == '~~c':
                     candles = []
-                    for high, low, open, close, volume in [[float(e) for e in c.split('|')] for c in buffer]:
-                        candles.append(Mql5Candle(high, low, open, close, volume))
+                    for high, low, open, close, volume, time in [[float(e) for e in c.split('|')] for c in buffer]:
+                        candles.append(Mql5Candle(high, low, open, close, volume, time))
                     result = self._event_handler.on_candles(candles)
                 if result:
                     win32file.WriteFile(self._pipe, str.encode(result))
